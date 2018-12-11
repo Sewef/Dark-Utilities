@@ -25,6 +25,7 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 
 @DUFeature(name = "Charms", description = "A collection of charms which have unique effects")
 public class FeatureCharms extends Feature {
@@ -93,13 +94,15 @@ public class FeatureCharms extends Feature {
 
         if (event.getEntityLiving() instanceof EntityPlayer && !event.getSource().canHarmInCreative()) {
 
-            EntityPlayer entityBase = (EntityPlayer) event.getEntityLiving();
+            final EntityPlayer entityBase = (EntityPlayer) event.getEntityLiving();
 
             // Focus Sash
             if (entityBase instanceof EntityPlayer && itemFocusSash.hasItem(entityBase) && entityBase.getHealth() >= entityBase.getMaxHealth()) {
-                float damage = event.getAmount();
-                damage = entityBase.applyArmorCalculations(event.getSource(), damage);
-                damage = entityBase.applyPotionDamageCalculations(event.getSource(), damage);
+                double damage = event.getAmount();
+                damage = applyArmor(entityBase, entityBase.armorInventory, event.getSource(), damage);
+                
+                // damage = entityBase.applyArmorCalculations(event.getSource(), damage);
+                // damage = entityBase.applyPotionDamageCalculations(event.getSource(), damage);
                 
                 float maxHealth = entityBase.getMaxHealth();
                 maxHealth += entityBase.getAbsorptionAmount();
