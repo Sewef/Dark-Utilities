@@ -104,7 +104,7 @@ public class FeatureCharms extends Feature {
                 float damage = event.getAmount();
                 
                 // Apply Armor
-                damage = applyArmor(entityBase, entityBase.	getArmorInventoryList(), event.getSource(), damage);
+                damage = ArmorProperties.applyArmor(entityBase, entityBase.getArmorInventoryList(), event.getSource(), damage);
                 
                 // Apply RESISTANCE effect
                 if (entityBase.isPotionActive(MobEffects.RESISTANCE)) {
