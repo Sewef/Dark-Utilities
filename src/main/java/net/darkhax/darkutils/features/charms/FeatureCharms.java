@@ -99,7 +99,7 @@ public class FeatureCharms extends Feature {
             // Focus Sash
             if (entityBase instanceof EntityPlayer && itemFocusSash.hasItem(entityBase) && entityBase.getHealth() >= entityBase.getMaxHealth()) {
                 double damage = event.getAmount();
-                damage = applyArmor(entityBase, entityBase.armorInventory, event.getSource(), damage);
+                damage = applyArmor(entityBase, entityBase.getArmorInventoryList(), event.getSource(), damage);
                 
                 // damage = entityBase.applyArmorCalculations(event.getSource(), damage);
                 // damage = entityBase.applyPotionDamageCalculations(event.getSource(), damage);
