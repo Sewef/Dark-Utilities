@@ -99,8 +99,8 @@ public class FeatureCharms extends Feature {
             if (entityBase instanceof EntityPlayer && itemFocusSash.hasItem(entityBase) && entityBase.getHealth() >= entityBase.getMaxHealth()) {
                 
                 float damage = event.getAmount();
-                damage = event.getEntityLiving().applyArmorCalculations(event.getSource(), damage);
-                damage = event.getEntityLiving().applyPotionDamageCalculations(event.getSource(), damage);
+                damage = new entityBase.applyArmorCalculations(event.getSource(), damage);
+                damage = new entityBase.applyPotionDamageCalculations(event.getSource(), damage);
                 
                 float maxHealth = entityBase.getMaxHealth();
                 maxHealth += entityBase.getAbsorptionAmount();
