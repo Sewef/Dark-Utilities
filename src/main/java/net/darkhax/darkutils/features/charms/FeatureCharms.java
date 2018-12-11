@@ -8,12 +8,14 @@ import net.darkhax.darkutils.DarkUtils;
 import net.darkhax.darkutils.features.DUFeature;
 import net.darkhax.darkutils.features.Feature;
 import net.darkhax.darkutils.features.material.FeatureMaterial;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.init.MobEffects;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -102,7 +104,7 @@ public class FeatureCharms extends Feature {
                 float damage = event.getAmount();
                 
                 // Apply Armor
-                damage = applyArmor(entityBase, entityBase.armorInventory, event.getSource(), damage);
+                damage = applyArmor(entityBase, entityBase.	getArmorInventoryList(), event.getSource(), damage);
                 
                 // Apply RESISTANCE effect
                 if (entityBase.isPotionActive(MobEffects.RESISTANCE)) {
@@ -113,7 +115,7 @@ public class FeatureCharms extends Feature {
                 }
                 
                 // Apply Enchantments dmg reduc
-                int k = EnchantmentHelper.getEnchantmentModifierDamage(this.getArmorInventoryList(), event.getSource());
+                int k = EnchantmentHelper.getEnchantmentModifierDamage(entityBase.getArmorInventoryList(), event.getSource());
                 if (k > 0)
                     damage = CombatRules.getDamageAfterMagicAbsorb(damage, (float)k);
             
