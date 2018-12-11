@@ -14,10 +14,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.CombatRules;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -25,7 +27,6 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 
 @DUFeature(name = "Charms", description = "A collection of charms which have unique effects")
 public class FeatureCharms extends Feature {
@@ -98,9 +99,24 @@ public class FeatureCharms extends Feature {
 
             // Focus Sash
             if (entityBase instanceof EntityPlayer && itemFocusSash.hasItem(entityBase) && entityBase.getHealth() >= entityBase.getMaxHealth()) {
-                double damage = event.getAmount();
-                damage = applyArmor(entityBase, entityBase.getArmorInventoryList(), event.getSource(), damage);
+                float damage = event.getAmount();
                 
+                // Apply Armor
+                damage = applyArmor(entityBase, entityBase.armorInventory, event.getSource(), damage);
+                
+                // Apply RESISTANCE effect
+                if (entityBase.isPotionActive(MobEffects.RESISTANCE)) {
+                    int i = (entityBase.getActivePotionEffect(MobEffects.RESISTANCE).getAmplifier() + 1) * 5;
+                    int j = 25 - i;
+                    float f = damage * (float)j;
+                    damage = f / 25.0F;
+                }
+                
+                // Apply Enchantments dmg reduc
+                int k = EnchantmentHelper.getEnchantmentModifierDamage(this.getArmorInventoryList(), event.getSource());
+                if (k > 0)
+                    damage = CombatRules.getDamageAfterMagicAbsorb(damage, (float)k);
+            
                 // damage = entityBase.applyArmorCalculations(event.getSource(), damage);
                 // damage = entityBase.applyPotionDamageCalculations(event.getSource(), damage);
                 
