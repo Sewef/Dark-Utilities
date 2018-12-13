@@ -129,7 +129,7 @@ public class FeatureCharms extends Feature {
     public void onItemUse (LivingEntityUseItemEvent.Tick event) {
 
         // Gluttony Charm
-        if (event.getEntityLiving() instanceof EntityPlayer && itemGluttonyCharm.hasItem((EntityPlayer) event.getEntityLiving()) && !event.getItem().isEmpty() && event.getItem().getItem() instanceof ItemFood) {
+        if (event.getEntityLiving() instanceof EntityPlayer && itemGluttonyCharm.hasItem((EntityPlayer) event.getEntityLiving()) && getItemUseAction(event.getItem()) == EnumAction.EAT) {
             event.setDuration(0);
         }
     }
