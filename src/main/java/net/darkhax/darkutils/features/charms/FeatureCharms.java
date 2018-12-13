@@ -131,7 +131,7 @@ public class FeatureCharms extends Feature {
 
         // Gluttony Charm
         // if (event.getEntityLiving() instanceof EntityPlayer && itemGluttonyCharm.hasItem((EntityPlayer) event.getEntityLiving()) && !event.getItem().isEmpty() && event.getItem().getItem() instanceof ItemFood) {
-        if (event.getEntityLiving() instanceof EntityPlayer && itemGluttonyCharm.hasItem((EntityPlayer) event.getEntityLiving()) && getItemUseAction(event.getItem()) == EnumAction.EAT) {
+        if (event.getEntityLiving() instanceof EntityPlayer && itemGluttonyCharm.hasItem((EntityPlayer) event.getEntityLiving()) && Item.getItemUseAction(event.getItem()) == Item.EnumAction.EAT) {
             event.setDuration(0);
         }
     }
